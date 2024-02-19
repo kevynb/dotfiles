@@ -122,6 +122,8 @@ fi
 
 if command -v eza &> /dev/null
 then
+    # Remove potential custom config around ls
+    unalias ls
     alias old_ls=`which ls`
     alias ls="eza"
     alias ll="ls -al"
@@ -148,6 +150,8 @@ fi
 
 if command -v rg &> /dev/null
 then
+    # Remove potential custom config around grep
+    unalias grep
     alias old_grep=`which grep`
     alias grep="rg"
 else
