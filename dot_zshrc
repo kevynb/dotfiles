@@ -44,6 +44,70 @@ function is_osx() {
     [[ "$OSTYPE" =~ ^darwin ]] || return 1
 }  
 
+# export pour l'historique des commandes
+export HISTSIZE=32768
+export HISTFILESIZE=$HISTSIZE
+
+export VISUAL="emacs"
+export EDITOR="emacs"
+export GIT_EDITOR="emacs"
+export PAGER=less
+
+export DEFAULT_USER=bruyer_k
+export TERM=xterm-256color
+export CLICOLOR=1
+
+# If user is root it can have some issues with access to competition files
+if [[ "${USER}" == "root" ]]; then
+    ZGEN_AUTOLOAD_COMPINIT=false
+fi
+
+source "${HOME}/.zgenom/zgenom.zsh"
+zgenom autoupdate
+
+### Zgenom utility is what builds the shell settings.
+### - It creates a cache of the config. use `zgenom reset` to clear eve
+###
+
+if ! zgenom saved; then
+
+    # Add this if you experience issues with missing completions or errors mentioning compdef.
+    zgenom compdef
+    # zgenom will load oh-my-zsh and download it if required
+    zgenom ohmyzsh
+
+    # list of plugins from zsh I use
+    # see https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
+    zgenom ohmyzsh plugins/git
+    zgenom ohmyzsh plugins/npm
+    zgenom ohmyzsh plugins/kubectl
+    zgenom ohmyzsh plugins/sudo
+    zgenom ohmyzsh plugins/man
+ 
+    if [ ! is_osx ]; then
+      zgenom ohmyzsh plugins/debian
+    fi
+    #zgenom ohmyzsh plugins/emacs
+    zgenom ohmyzsh plugins/command-not-found
+    zgenom ohmyzsh plugins/cp
+    zgenom ohmyzsh plugins/mosh
+    zgenom ohmyzsh plugins/history-substring-search
+    
+    # https://github.com/zsh-users/zsh-completions
+    zgenom load zsh-users/zsh-completions src
+
+    zgenom load zsh-users/zsh-syntax-highlighting
+
+    if is_osx; then
+	zgenom ohmyzsh plugins/brew
+        zgenom ohmyzsh plugins/macos
+    fi
+    
+    zgenom save
+
+    zgenom compile "$HOME/.zshrc"
+fi
+
 # User configuration
 
 alias emacs='emacs -nw'
@@ -149,67 +213,6 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 function tmosh() {
   mosh $1 -- tmux a
 }
-
-
-# export pour l'historique des commandes
-export HISTSIZE=32768
-export HISTFILESIZE=$HISTSIZE
-
-export VISUAL="emacs"
-export EDITOR="emacs"
-export GIT_EDITOR="emacs"
-export PAGER=less
-
-export DEFAULT_USER=bruyer_k
-export TERM=xterm-256color
-export CLICOLOR=1
-
-# If user is root it can have some issues with access to competition files
-if [[ "${USER}" == "root" ]]; then
-    ZGEN_AUTOLOAD_COMPINIT=false
-fi
-
-source "${HOME}/.zgenom/zgenom.zsh"
-zgenom autoupdate
-
-if ! zgenom saved; then
-
-    # Add this if you experience issues with missing completions or errors mentioning compdef.
-    zgenom compdef
-    # zgenom will load oh-my-zsh and download it if required
-    zgenom ohmyzsh
-
-    # list of plugins from zsh I use
-    # see https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins
-    zgenom ohmyzsh plugins/git
-    zgenom ohmyzsh plugins/npm
-    zgenom ohmyzsh plugins/kubectl
-    zgenom ohmyzsh plugins/sudo
-    zgenom ohmyzsh plugins/man
- 
-    if [ ! is_osx ]; then
-      zgenom ohmyzsh plugins/debian
-    fi
-    #zgenom ohmyzsh plugins/emacs
-    zgenom ohmyzsh plugins/command-not-found
-    zgenom ohmyzsh plugins/cp
-    zgenom ohmyzsh plugins/mosh
-    zgenom ohmyzsh plugins/history-substring-search
-    
-    # https://github.com/zsh-users/zsh-completions
-    zgenom load zsh-users/zsh-completions src
-
-    zgenom load zsh-users/zsh-syntax-highlighting
-
-    if is_osx; then
-	zgenom ohmyzsh plugins/brew
-        zgenom ohmyzsh plugins/macos
-    fi
-    
-    zgenom save
-
-    zgenom compile "$HOME/.zshrc"
-fi
 
 
 # specific for machine configuration, which I don't sync
