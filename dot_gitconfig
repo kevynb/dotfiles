@@ -1,10 +1,16 @@
+# https://jvns.ca/blog/2024/02/16/popular-git-config-options/
+
 [user]
 	name = Kevyn Bruyere
 	email = kevynb@users.noreply.github.com
 [core]
 	editor = emacs -nw
-	excludesfile = /Users/bruyer_k/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	autocrlf = input
+	pager = delta
+[includeIf "gitdir:~/git/bb2/"]
+path = "~/git/bb2/.gitconfig"
+
 [color]
   ui = auto
 
@@ -34,8 +40,51 @@
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [push]
-	default = simple
+#These push.default options tell git push to automatically push the current branch to a remote branch with the same name.
+#    push.default simple is the default in Git. It only works if your branch is already tracking a remote branch
+#    push.default current is similar, but it’ll always push the local branch to a remote branch with the same name.
+#Removes the need for a gpsup
+	default = current
+	followtags = true
 [branch]
 	autosetuprebase = always
 [pull]
 	rebase = preserve
+[merge]
+	conflictstyle = zdiff3
+[rebase]
+	autostash = true
+	updateRefs = true
+[rerere]
+# This enables rerere (”reuse recovered resolution”), which remembers how you resolved merge conflicts during a git rebase and automatically resolves conflicts for you when it can.
+	enabled = true
+
+[fetch]
+	prune = true
+	prunetags = true
+	fsckobjects = true
+[init]
+	defaultBranch = main
+[gpg]
+	format = ssh
+[help]
+	autocorrect = 10
+
+### Delta config ###
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+
+[diff]
+    colorMoved = default
+    algorithm = histogram
+### /Delta config ###
+
+# fsckobjects: avoid data corruption
+[transfer]
+	fsckobjects = true
+[receive]
+	fsckObjects = true

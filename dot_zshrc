@@ -121,7 +121,7 @@ fi
 alias nslookup='nslookup -sil'
 alias tf='tail -f'
 
-alias zshrc="emacs ~/.zshrc"
+alias zshrc="chezmoi edit ~/.zshrc"
 alias h="history"
 alias j="jobs"
 

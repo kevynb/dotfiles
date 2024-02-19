@@ -33,6 +33,7 @@ packages:
     - "folly"
     - "gd"
     - "git"
+    - "git-delta"
     - "git-extras"
     - "glib"
     - "gnu-tar"
