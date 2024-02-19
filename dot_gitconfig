@@ -9,6 +9,7 @@
 	autocrlf = input
 	pager = delta
 [includeIf "gitdir:~/git/bb2/"]
+# This file is not managed by chezmoi
 path = "~/git/bb2/.gitconfig"
 
 [color]
