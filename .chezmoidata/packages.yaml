@@ -106,6 +106,7 @@ packages:
     - "lunar"
     - "microsoft-office"
     - "microsoft-teams"
+    - "font-hasklug-nerd-font"
     - "ngrok"
     - "postman"
     - "slack"
