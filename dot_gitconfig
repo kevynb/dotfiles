@@ -54,6 +54,7 @@ path = "~/git/bb2/.gitconfig"
 	conflictstyle = zdiff3
 [rebase]
 	autostash = true
+# updateRefs: https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/
 	updateRefs = true
 [rerere]
 # This enables rerere (”reuse recovered resolution”), which remembers how you resolved merge conflicts during a git rebase and automatically resolves conflicts for you when it can.
