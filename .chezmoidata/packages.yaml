@@ -19,6 +19,7 @@ packages:
     - "awscli"
     - "cairo"
     - "cask"
+    - "chezmoi"
     - "curl"
     - "edencommon"
     - "emacs"
