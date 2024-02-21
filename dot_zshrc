@@ -1,4 +1,21 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
+######################################################
+######################################################
+### USE CHEZMOI TO EDIT THIS FILE
+### chezmoi edit ~/.zshrc
+### chezmoi apply
+######################################################
+######################################################
+######################################################
+
+
+# Detect CPU architecture to run brew from the proper location
+cpu_arch=$(arch)
+if [[ $cpu_arch == "arm64" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 eval "$(starship init zsh)"
 eval "$(fnm env --use-on-cd)"
 

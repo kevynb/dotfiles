@@ -1,0 +1,7 @@
+### This files contains machine specific variables
+### They are used to drive the configuration.
+
+{{- $email := promptStringOnce . "email" "Git email address" -}}
+
+[data]
+    email = {{ $email | quote }}

@@ -1,8 +1,21 @@
+######################################################
+######################################################
+### USE CHEZMOI TO EDIT THIS FILE
+### chezmoi edit ~/.gitconfig
+### chezmoi apply
+######################################################
+######################################################
+######################################################
+
+
+
 # https://jvns.ca/blog/2024/02/16/popular-git-config-options/
 
 [user]
 	name = Kevyn Bruyere
-	email = kevynb@users.noreply.github.com
+## This email is set using the variable set in ~/.config/chezmoi/chezmoi.toml
+## To change it, update the value in the file above an run `chezmoi apply` one more time
+	email = {{ .email | quote }}
 [core]
 	editor = emacs -nw
 	excludesfile = ~/.gitignore_global
