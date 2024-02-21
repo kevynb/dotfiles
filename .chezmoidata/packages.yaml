@@ -114,7 +114,6 @@ packages:
     - "spotify"
     - "suspicious-package"
     - "tableplus"
-    - "tailscale"
     - "the-unarchiver"
     - "transmit"
     - "vlc"
@@ -123,3 +122,8 @@ packages:
     - "wireshark"
     - "zeplin"
     - "zoom"
+    mas:
+    #Tailscale
+    - "\"Tailscale\", id: 1475387142"
+    # BetterSnapTool
+    - "\"BetterSnapTool\", id: 417375580"

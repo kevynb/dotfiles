@@ -120,3 +120,7 @@ If you need to have machine-specific configuration, you can add variables in `.c
 They will then be used in your templated files.
 If you use the special keyword `promptStringOnce` you will be prompted what value to use when initializing the repo for the first time.
 If you want to update it in the future, run `chezmoi init` again or edit `~/.local/share/chezmoi/.chezmoi.toml.tmpl`.
+
+### Installing packages on MacOS with Brew
+
+The script `run_onchange_darwin-install-packages.sh.tmpl` will load the list of packages in `.chezmoidata/packages.yaml` and install all packages listed there.

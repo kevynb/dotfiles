@@ -1,7 +1,11 @@
-### This files contains machine specific variables
-### They are used to drive the configuration.
 
 {{- $email := promptStringOnce . "email" "Git email address" -}}
 
+
 [data]
     email = {{ $email | quote }}
+
+
+### This files contains machine specific variables
+### They are used to drive the configuration.
+### The comment is at the end because else the file gets somehow messed up
