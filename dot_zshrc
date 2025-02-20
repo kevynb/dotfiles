@@ -255,4 +255,8 @@ fi
 #Edit env variables => vared VAR
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+## Ensure that ollama models are put in a shared space
+if is_osx; then
+  export OLLAMA_MODELS='/opt/ollama/models'
+fi
 
