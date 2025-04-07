@@ -96,6 +96,7 @@ packages:
     - "google-cloud-sdk"
     - "hex-fiend"
     - "iterm2"
+    - "keymapp"
     - "lunar"
     - "microsoft-office"
     - "microsoft-teams"
