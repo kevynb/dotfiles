@@ -260,3 +260,4 @@ if is_osx; then
   export OLLAMA_MODELS='/opt/ollama/models'
 fi
 
+alias chezmoipkg='emacs -nw ~/.local/share/chezmoi/.chezmoidata/packages.yaml && chezmoi apply'
