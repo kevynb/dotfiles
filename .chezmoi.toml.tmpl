@@ -6,6 +6,11 @@
     email = {{ $email | quote }}
 
 
+[[textconv]]
+pattern = "**/*.plist"
+command = "plutil"
+args = ["-convert", "xml1", "-o", "-", "-"]
+
 ### This files contains machine specific variables
 ### They are used to drive the configuration.
 ### The comment is at the end because else the file gets somehow messed up
