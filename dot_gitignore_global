@@ -69,3 +69,6 @@ Desktop.ini
 .swo
 .*.swp
 .*.swo
+
+# AI Tools
+.aider.*
