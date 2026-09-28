@@ -1,0 +1,20 @@
+theme = light:iTerm2 Solarized Light,dark:iTerm2 Solarized Dark
+copy-on-select = clipboard
+macos-titlebar-style = tabs
+window-save-state = always
+quit-after-last-window-closed = true
+scrollback-limit = 100000000
+window-inherit-working-directory = true
+# Hold shift to select text without app capturing mouse
+mouse-shift-capture = true
+cursor-style = block
+cursor-style-blink = false
+# Don't change cursor to blinking bar at prompt
+shell-integration-features = no-cursor
+
+# Jump to previous/next shell prompt (requires shell integration)
+keybind = ctrl+shift+up=jump_to_prompt:-1
+keybind = ctrl+shift+down=jump_to_prompt:1
+
+# Temporarily zoom a split to fullscreen
+keybind = cmd+shift+enter=toggle_split_zoom

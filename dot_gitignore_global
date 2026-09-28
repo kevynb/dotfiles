@@ -72,3 +72,6 @@ Desktop.ini
 
 # AI Tools
 .aider.*
+**/.claude/.cc-writes/
+
+**/.claude/settings.local.json
