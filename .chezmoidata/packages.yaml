@@ -93,7 +93,6 @@ packages:
       - "microsoft-office"
       - "moonlight"
       - "ngrok"
-      - "obsidian"
       - "postman"
       - "slack"
       - "sourcetree"
@@ -129,6 +128,7 @@ packages:
       - "tea"
       casks:
       - "adobe-creative-cloud"
+      - "obsidian"
       - "orbstack"
       - "orcaslicer"
       - "transmit"
