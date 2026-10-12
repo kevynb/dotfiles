@@ -103,7 +103,6 @@ packages:
       - "tableplus"
       - "tailscale-app"
       - "the-unarchiver"
-      - "transmit"
       - "vlc"
       - "webpquicklook"
       - "webstorm"
@@ -132,6 +131,7 @@ packages:
       - "adobe-creative-cloud"
       - "orbstack"
       - "orcaslicer"
+      - "transmit"
       - "wireshark-app"
     work:
       brews:
