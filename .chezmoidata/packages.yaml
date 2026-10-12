@@ -85,7 +85,6 @@ packages:
       - "goland"
       - "google-chrome"
       - "hex-fiend"
-      - "iterm2"
       - "jetbrains-toolbox"
       - "karabiner-elements"
       - "keymapp"
