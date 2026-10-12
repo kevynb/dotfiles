@@ -152,8 +152,8 @@ plus either `packages.darwin.personal` or `packages.darwin.work`. Each set can
 contain `brew_taps`, `brews`, `casks`, and `mas` entries; duplicates are removed.
 
 - **Base:** shared tools and apps from the existing package list.
-- **Personal:** `orcaslicer` and `wireshark-app`.
-- **Work:** `aws-vpn-client`.
+- **Personal:** personal tools and apps, for example `orcaslicer` and `wireshark-app`.
+- **Work:** work tools and apps, for example `aws-vpn-client`.
 
 Homebrew must already be installed; use `.bootstrap.sh` on a new Mac. The package
 script loads Homebrew's environment itself, without depending on `.zshrc`.
