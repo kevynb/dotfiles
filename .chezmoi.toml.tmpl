@@ -1,9 +1,14 @@
 
 {{- $email := promptStringOnce . "email" "Git email address" -}}
+{{- $machineType := promptChoiceOnce . "machineType" "Machine type" (list "personal" "work") -}}
+{{- if not (has $machineType (list "personal" "work")) -}}
+{{- fail "machineType must be personal or work" -}}
+{{- end -}}
 
 
 [data]
     email = {{ $email | quote }}
+    machineType = {{ $machineType | quote }}
 
 
 [[textconv]]
