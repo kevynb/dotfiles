@@ -49,6 +49,7 @@ packages:
     - "ssh-copy-id"
     - "sshpass"
     - "starship"
+    - "talosctl"
     - "telnet"
     - "terminal-notifier"
     - "tfenv"
@@ -104,7 +105,6 @@ packages:
     - "vlc"
     - "webstorm"
     - "wireshark-app"
-    - "zeplin"
     - "zoom"
     mas:
     # BetterSnapTool
