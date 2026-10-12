@@ -17,19 +17,34 @@ This repo uses [Chezmoi](https://www.chezmoi.io) ([Github](https://github.com/tw
 
 ## Getting Started
 
-1. There is 2 ways to install this
-    1. **Bootstrap automatically:**
+1. **Bootstrap a new Mac:**
 
-    ```bash
-    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply kevynb
-    ```
-    2. **Clone the Repository and install manually:**
+   ```bash
+   bootstrap="$(curl -fsSL https://raw.githubusercontent.com/kevynb/dotfiles/main/.bootstrap.sh)" && /bin/bash -c "$bootstrap"
+   ```
 
-     ```bash
-     git clone https://github.com/kevynb/dotfiles
-     cd dotfiles
-     chezmoi init --apply kevynb
-     ```
+   The script installs Homebrew if missing, loads its shell environment, and
+   installs chezmoi if needed. It then initializes this repository, asks for your
+   Git email and whether the machine is `personal` or `work`, and installs the
+   base packages plus the selected profile. Existing Homebrew installations are
+   reused, including installations that are not yet in `PATH`.
+
+   If you already cloned the repository, run `/bin/bash .bootstrap.sh` from its
+   root. Homebrew's installer may ask for your administrator password.
+
+   To initialize and preview changes before applying them:
+
+   ```bash
+   bootstrap="$(curl -fsSL https://raw.githubusercontent.com/kevynb/dotfiles/main/.bootstrap.sh)" && /bin/bash -c "$bootstrap" -- --apply=false
+   chezmoi diff
+   chezmoi apply --dry-run --verbose
+   chezmoi apply
+   ```
+
+   `--apply=false` still installs Homebrew and chezmoi if missing and saves
+   your configuration, but leaves applying dotfiles and packages to you.
+   On an already provisioned Mac, you can instead run `chezmoi init kevynb`, inspect `chezmoi diff`, and
+   run `chezmoi apply` when ready.
 
 2. **Customization:**
    - Adjust configurations in individual dotfiles.
@@ -39,7 +54,7 @@ This repo uses [Chezmoi](https://www.chezmoi.io) ([Github](https://github.com/tw
    ```bash
    chezmoi cd
    git add -A
-   git commit -m "My changes"
+   git commit -m "chore(dotfiles): update configuration"
    git push
    ```
 
@@ -118,9 +133,37 @@ This dotfiles repository serves the following purposes:
 
 If you need to have machine-specific configuration, you can add variables in `.chezmoi.toml.tmpl`.
 They will then be used in your templated files.
-If you use the special keyword `promptStringOnce` you will be prompted what value to use when initializing the repo for the first time.
-If you want to update it in the future, run `chezmoi init` again or edit `~/.local/share/chezmoi/.chezmoi.toml.tmpl`.
+`promptStringOnce` and `promptChoiceOnce` ask for values that are not already
+saved in your local `~/.config/chezmoi/chezmoi.toml`. The `email` and
+`machineType` values are stored under `[data]`; the machine profile is local
+to each machine, not committed to this repository.
+
+On an existing machine, run `chezmoi init` once after updating this repository
+to select a profile. Subsequent initialization reuses the saved choice.
+To switch profiles, run `chezmoi edit-config`, change `data.machineType` to
+`"personal"` or `"work"`, then preview with `chezmoi diff` and run
+`chezmoi apply`. Missing or invalid profiles stop package template rendering.
 
 ### Installing packages on MacOS with Brew
 
-The script `run_onchange_darwin-install-packages.sh.tmpl` will load the list of packages in `.chezmoidata/packages.yaml` and install all packages listed there.
+The script `run_onchange_darwin-install-packages.sh.tmpl` reads
+`.chezmoidata/packages.yaml` and renders one Brewfile using `packages.darwin.base`
+plus either `packages.darwin.personal` or `packages.darwin.work`. Each set can
+contain `brew_taps`, `brews`, `casks`, and `mas` entries; duplicates are removed.
+
+- **Base:** shared tools and apps from the existing package list.
+- **Personal:** `orcaslicer` and `wireshark-app`.
+- **Work:** `aws-vpn-client`.
+
+Homebrew must already be installed; use `.bootstrap.sh` on a new Mac. The package
+script loads Homebrew's environment itself, without depending on `.zshrc`.
+App Store entries may require signing in to the App Store first.
+
+chezmoi runs the package script when its rendered contents change, including
+changes to the selected package set. Changes confined to another profile do
+not trigger it. Installation is additive: removing an entry or switching
+profiles does not uninstall existing apps. No `brew bundle cleanup` is run.
+
+This follows chezmoi's [declarative package installation recipe](https://www.chezmoi.io/user-guide/advanced/install-packages-declaratively/)
+and uses [promptChoiceOnce](https://www.chezmoi.io/reference/templates/init-functions/promptChoiceOnce/)
+to remember the machine profile.

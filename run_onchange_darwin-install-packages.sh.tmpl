@@ -1,17 +1,41 @@
 {{ if eq .chezmoi.os "darwin" -}}
+{{- $machineType := index . "machineType" | default "" -}}
+{{- if not (has $machineType (list "personal" "work")) -}}
+{{- fail "machineType must be personal or work; run chezmoi init to select a profile" -}}
+{{- end -}}
+{{- $base := .packages.darwin.base -}}
+{{- $profile := index .packages.darwin $machineType -}}
 #!/bin/bash
+set -euo pipefail
 
-brew bundle --file=/dev/stdin <<EOF
-{{ range .packages.darwin.brew_taps -}}
+# chezmoi executes this script with Bash, without loading .zshrc.
+brew_bin="$(command -v brew || true)"
+if [[ -z "$brew_bin" ]]; then
+    for candidate in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+        if [[ -x "$candidate" ]]; then
+            brew_bin="$candidate"
+            break
+        fi
+    done
+fi
+if [[ -z "$brew_bin" ]]; then
+    echo "Homebrew is missing. Run the repository's .bootstrap.sh first." >&2
+    exit 1
+fi
+brew_env="$("$brew_bin" shellenv)"
+eval "$brew_env"
+
+"$brew_bin" bundle --file=/dev/stdin <<'EOF'
+{{ range concat (index $base "brew_taps" | default (list)) (index $profile "brew_taps" | default (list)) | uniq -}}
 tap {{ . | quote }}
 {{ end -}}
-{{ range .packages.darwin.brews -}}
+{{ range concat (index $base "brews" | default (list)) (index $profile "brews" | default (list)) | uniq -}}
 brew {{ . | quote }}
 {{ end -}}
-{{ range .packages.darwin.casks -}}
+{{ range concat (index $base "casks" | default (list)) (index $profile "casks" | default (list)) | uniq -}}
 cask {{ . | quote }}
 {{ end -}}
-{{ range .packages.darwin.mas -}}
+{{ range concat (index $base "mas" | default (list)) (index $profile "mas" | default (list)) | uniq -}}
 mas {{ . }}
 {{ end -}}
 
